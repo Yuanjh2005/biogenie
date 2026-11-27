@@ -1,0 +1,101 @@
+spring:
+  config:
+    import: optional:file:./.env.dev[.properties],optional:file:./backend/biogenie-backend/.env.dev[.properties]
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: ${MYSQL_DRIVER_CLASS_NAME}
+    hikari:
+      minimum-idle: ${MYSQL_HIKARI_MINIMUM_IDLE}
+      maximum-pool-size: ${MYSQL_HIKARI_MAXIMUM_POOL_SIZE}
+      idle-timeout: ${MYSQL_HIKARI_IDLE_TIMEOUT}
+      max-lifetime: ${MYSQL_HIKARI_MAX_LIFETIME}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      database: ${REDIS_DATABASE}
+      timeout: ${REDIS_TIMEOUT}
+      lettuce:
+        pool:
+          max-active: ${REDIS_LETTUCE_POOL_MAX_ACTIVE}
+          max-idle: ${REDIS_LETTUCE_POOL_MAX_IDLE}
+          min-idle: ${REDIS_LETTUCE_POOL_MIN_IDLE}
+
+# MinIO 配置
+minio:
+  endpoint: ${MINIO_ENDPOINT}
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_SECRET_KEY}
+  bucket-name: ${MINIO_BUCKET_NAME}
+  signed-url-expire-seconds: ${MINIO_SIGNED_URL_EXPIRE_SECONDS}
+
+# 外部系统 SSO 免登
+sso:
+  ticket-ttl-seconds: ${SSO_TICKET_TTL_SECONDS}
+  clients:
+    - client-id: ${SSO_CLIENT_ID}
+      client-secret: ${SSO_CLIENT_SECRET}
+      source: ${SSO_SOURCE}
+
+# 微信开放平台 - 网站应用 PC 端扫码登录配置
+wechat:
+  app-id: ${WECHAT_APP_ID}
+  app-secret: ${WECHAT_APP_SECRET}
+  redirect-uri: ${WECHAT_REDIRECT_URI}
+
+# 短信配置 - 阿里云号码认证 Dypnsapi（开发环境填真实凭证）
+sms:
+  access-key-id: ${SMS_ACCESS_KEY_ID}
+  access-key-secret: ${SMS_ACCESS_KEY_SECRET}
+  sign-name: ${SMS_SIGN_NAME}
+  template-code: ${SMS_TEMPLATE_CODE}
+  scheme-name: ${SMS_SCHEME_NAME}
+  template-param: ${SMS_TEMPLATE_PARAM}
+  code-length: ${SMS_CODE_LENGTH}
+  region: ${SMS_REGION}
+  endpoint: ${SMS_ENDPOINT}
+  rate-limit-seconds: ${SMS_RATE_LIMIT_SECONDS}
+
+# 阿里云百炼 DashScope 应用（凭证勿提交真实 Key，可参考本地 PDF / 环境变量）
+ai:
+  base-url: ${AI_BASE_URL}
+  connect-timeout-ms: ${AI_CONNECT_TIMEOUT_MS}
+  read-timeout-ms: ${AI_READ_TIMEOUT_MS}
+  stream-read-timeout-ms: ${AI_STREAM_READ_TIMEOUT_MS}
+  stream-timeout-ms: ${AI_STREAM_TIMEOUT_MS}
+  stream-pool:
+    core-size: ${AI_STREAM_POOL_CORE_SIZE}
+    max-size: ${AI_STREAM_POOL_MAX_SIZE}
+    keep-alive-seconds: ${AI_STREAM_POOL_KEEP_ALIVE_SECONDS}
+    queue-capacity: ${AI_STREAM_POOL_QUEUE_CAPACITY}
+  default-app: ${AI_DEFAULT_APP}
+  apps:
+    smartdrgf-fast:
+      app-id: ${AI_SMARTDRGF_FAST_APP_ID}
+      api-key: ${AI_SMARTDRGF_FAST_API_KEY}
+    smartdrgf-web:
+      app-id: ${AI_SMARTDRGF_WEB_APP_ID}
+      api-key: ${AI_SMARTDRGF_WEB_API_KEY}
+    design-mcp:
+      app-id: ${AI_DESIGN_MCP_APP_ID}
+      api-key: ${AI_DESIGN_MCP_API_KEY}
+    deep-pubmed:
+      app-id: ${AI_DEEP_PUBMED_APP_ID}
+      api-key: ${AI_DEEP_PUBMED_API_KEY}
+
+logging:
+  level:
+    org.springframework.web: ${LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB}
+    org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor: ${LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB_SERVLET_MVC_METHOD_ANNOTATION_REQUESTRESPONSEBODYMETHODPROCESSOR}
+    com.agent.biogenie: ${LOGGING_LEVEL_COM_AGENT_BIOGENIE}
+
+cors:
+  allow-all: ${CORS_ALLOW_ALL}
+  allow-credentials: ${CORS_ALLOW_CREDENTIALS}
+
+# 对话分享前端根地址（拼接 /share/{token}）
+share:
+  base-url: ${SHARE_BASE_URL}

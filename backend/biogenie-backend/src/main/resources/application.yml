@@ -1,0 +1,63 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 250MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+# MyBatis Plus 配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+# JWT 配置（Access / Refresh 双 Token）
+jwt:
+  secret: ${JWT_SECRET}
+  access-expiration: 3600000       # Access Token 1小时
+  refresh-expiration: 604800000    # Refresh Token 7天
+  renew-threshold: 300000          # 剩余不足 5 分钟时自动续 Access
+  grace-period: 600000             # Access 过期后 10 分钟宽限
+  redis-ttl-buffer: 300000         # Redis Session TTL 比 Refresh 多 5 分钟
+
+# SpringDoc 配置
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# 日志配置（环境级别由 logback-spring.xml 的 springProfile 控制）
+logging:
+  file:
+    path: ./logs
+  level:
+    org.springframework.web: WARN
+    org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor: WARN
+    com.agent.biogenie: INFO
+
+# 管理员审计与 API 行为日志
+admin:
+  log:
+    behavior-retention-days: 90
+    audit-retention-days: 365
+    cleanup-batch-size: 5000
+    cleanup-max-batches: 100
+    behavior-queue-capacity: 20000
+    behavior-flush-size: 500
+    behavior-flush-interval-ms: 1000
